@@ -26,6 +26,7 @@
     "appId": "com.electron.electron-quick-start",
     "mac": {
       "category": "your.app.category.type"
-    }
+    },
+    "asar": false
   }
 }
