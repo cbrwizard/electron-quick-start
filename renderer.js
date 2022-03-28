@@ -4,3 +4,10 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
+
+document.getElementById('drag').ondragstart = (event) => {
+  console.log('dragstart of renderer');
+  event.preventDefault()
+  window.electron.startDrag('random filename')
+}
+

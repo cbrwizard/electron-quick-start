@@ -1,6 +1,8 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
+const https = require('https')
+const fs = require('fs')
 
 function createWindow () {
   // Create the browser window.
@@ -41,3 +43,17 @@ app.on('window-all-closed', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+const iconName = path.join(__dirname, 'iconForDragAndDrop.png');
+const icon = fs.createWriteStream(iconName);
+
+https.get('https://img.icons8.com/ios/452/drag-and-drop.png', (response) => {
+  response.pipe(icon);
+});
+
+ipcMain.on('ondragstart', (event, filePath) => {
+  console.log('ondragstart', iconName);
+  event.sender.startDrag({
+    file: path.join(__dirname, 'iconForDragAndDrop.png'),
+    icon: iconName,
+  })
+})
